@@ -7,11 +7,12 @@ Mysql-crud dynamically creates an object that allows you to perform CRUD operati
 
 Table of Contents:
 
-* Usage
-* Create
-* Load (Retrieve)
-* Update
-* Destroy
+* [Usage](https://github.com/ryan-sandy/mysql-crud#usage)
+* [Create](https://github.com/ryan-sandy/mysql-crud#create)
+* [Load (Retrieve)](https://github.com/ryan-sandy/mysql-crud#load-retreive)
+* [Update](https://github.com/ryan-sandy/mysql-crud#update)
+* [Destroy](https://github.com/ryan-sandy/mysql-crud#destroy)
+* [Advanced](https://github.com/ryan-sandy/mysql-crud#advanced-usage)
 
 ##Usage:
 In-order to create a crud-object you must called the mysql-crud function with two parameters: a mysql connection pool and the table name your object. Remember, mysql-crud only performs work on a single table.
@@ -19,7 +20,7 @@ In-order to create a crud-object you must called the mysql-crud function with tw
 ```javascript
 var mysql = require('mysql');                
 var db = mysql.createPool();
-var CRUD = require('mysql-crud);
+var CRUD = require('mysql-crud');
 var user-crud = CRUD(db, 'users');
 //user-crud will now have the four functions
 ```
@@ -43,7 +44,7 @@ user-curd.create({'id' : 1, 'username' : 'test', 'password' : '1234'}, function 
 This function will SELECT all the rows that match the selector key-value. Multiple keys will be considered AND in the WHERE clause.
 
 Example:
-```
+```javascript
 user-crud.load({'first-name' : 'mysql', 'last-name' : 'crud'}, callback);
 //SELECT * FROM 'users' WHERE 'first-name' = "mysql" AND 'last-name' = "CRUD"
 ```
