@@ -42,7 +42,7 @@ module.exports = function (db, table) {
     'load' : function (attrs, next) {
       db.getConnection(function (conErr, connection) {
         if (conErr) { return next(conErr); }
-        connection.query(db.andEscape("SELECT * FROM " + table + " WHERE ??", attrs), function (err, rows) {
+        connection.query(andEscape("SELECT * FROM " + table + " WHERE ??", attrs), function (err, rows) {
           connection.end();
           next(err, rows);
         });
@@ -51,7 +51,7 @@ module.exports = function (db, table) {
     'update' : function (sel, attrs, next) {
       db.getConnection(function (conErr, connection) {
         if (conErr) { return next(conErr); }
-        connection.query(db.andEscape('UPDATE ' + table + " SET ? WHERE ??", sel), attrs, function (err, rows) {
+        connection.query(andEscape('UPDATE ' + table + " SET ? WHERE ??", sel), attrs, function (err, rows) {
           connection.end();
           next(err, rows);
         });
@@ -60,7 +60,7 @@ module.exports = function (db, table) {
     'destroy' : function (attrs, next) {
       db.getConnection(function (conErr, connection) {
         if (conErr) { return next(conErr); }
-        connection.query(db.andEscape("DELETE FROM " + table + " WHERE ??", attrs), function (err, rows) {
+        connection.query(andEscape("DELETE FROM " + table + " WHERE ??", attrs), function (err, rows) {
           connection.end();
           next(err, rows);
         });

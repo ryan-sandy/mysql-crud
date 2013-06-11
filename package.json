@@ -1,6 +1,6 @@
 {
   "name": "mysql-crud",
-  "version": "0.1.1",
+  "version": "0.0.1",
   "description": "A mysql CRUD file to use with mysql package",
   "main": "crud.js",
   "scripts": {},
