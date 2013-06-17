@@ -1,6 +1,6 @@
 {
   "name": "mysql-crud",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A mysql CRUD file to use with mysql package",
   "main": "crud.js",
   "scripts": {},
@@ -16,7 +16,17 @@
     "mysql-crud",
     "crud"
   ],
-  "author": "Ryan Lee",
+  "author": {
+    "name" : "Ryan Lee",
+    "email" : "thesandyman123@gmail.com"
+  },
+  "contributors" : [
+    {
+      "name" : "Stephen Wan",
+      "email" : "stephen@stephenwan.net",
+      "url" : "http://www.stephenwan.net/"
+    }
+  ],
   "license": "MIT",
   "readmeFilename": "README.md"
 }
