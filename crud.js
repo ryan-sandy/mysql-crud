@@ -28,9 +28,6 @@ module.exports = function (db, table) {
   table = mysql.escapeId(table);
   return {
     'create' : function (attrs, next) {
-      if (attrs.dateCreated === undefined) {
-        attrs.dateCreated = new Date();
-      }
       db.getConnection(function (conErr, connection) {
         if (conErr) { return next(conErr); }
         connection.query("INSERT INTO " + table + " SET ?", attrs, function (err, rows) {
