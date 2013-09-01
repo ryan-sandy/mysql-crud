@@ -31,7 +31,7 @@ module.exports = function (db, table) {
       db.getConnection(function (conErr, connection) {
         if (conErr) { return next(conErr); }
         connection.query("INSERT INTO " + table + " SET ?", attrs, function (err, rows) {
-          connection.end();
+          connection.release();
           next(err, rows);
         });
       });
@@ -40,7 +40,7 @@ module.exports = function (db, table) {
       db.getConnection(function (conErr, connection) {
         if (conErr) { return next(conErr); }
         connection.query(andEscape("SELECT * FROM " + table + " WHERE ??", attrs), function (err, rows) {
-          connection.end();
+          connection.release();
           next(err, rows);
         });
       });
@@ -49,7 +49,7 @@ module.exports = function (db, table) {
       db.getConnection(function (conErr, connection) {
         if (conErr) { return next(conErr); }
         connection.query(andEscape('UPDATE ' + table + " SET ? WHERE ??", sel), attrs, function (err, rows) {
-          connection.end();
+          connection.release();
           next(err, rows);
         });
       });
@@ -58,7 +58,7 @@ module.exports = function (db, table) {
       db.getConnection(function (conErr, connection) {
         if (conErr) { return next(conErr); }
         connection.query(andEscape("DELETE FROM " + table + " WHERE ??", attrs), function (err, rows) {
-          connection.end();
+          connection.release();
           next(err, rows);
         });
       });
