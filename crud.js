@@ -13,16 +13,19 @@ var andEscape = function (query, values) {
       throw new Error("Can only escape objects");
     }
     var rtn = [],
-      key = '';
+      key = '',
+      cnt = 0;
     for (key in values) {
       if (values.hasOwnProperty(key)) {
         rtn.push(mysql.escapeId(key) + ' = ' + mysql.escape(values[key]));
       }
     }
+    if (cnt === 0) {
+      return '1';
+    }
     return rtn.join(' AND ');
   });
 };
-
 
 module.exports = function (db, table) {
   table = mysql.escapeId(table);
@@ -36,10 +39,17 @@ module.exports = function (db, table) {
         });
       });
     },
-    'load' : function (attrs, next) {
+    'load' : function (attrs, next, opts) {
       db.getConnection(function (conErr, connection) {
         if (conErr) { return next(conErr); }
-        connection.query(andEscape("SELECT * FROM " + table + " WHERE ??", attrs), function (err, rows) {
+        var query = andEscape("SELECT * FROM " + table + " WHERE ??", attrs);
+        if (opts && opts.limit) {
+          query += ' LIMIT ' + mysql.escape(opts.limit);
+        }
+        if (opts && opts.limit && opts.offset) {
+          query += ' OFFSET ' + mysql.escape(opts.offset);
+        }
+        connection.query(query, function (err, rows) {
           connection.release();
           next(err, rows);
         });

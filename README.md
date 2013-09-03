@@ -1,4 +1,4 @@
-mysql-crud
+﻿mysql-crud
 ==========
 
 Simple CRUD operations for felixge/node-mysql.
@@ -7,15 +7,15 @@ Mysql-crud dynamically creates an object that allows you to perform CRUD operati
 
 Table of Contents:
 
-* [Usage](https://github.com/ryan-sandy/mysql-crud#usage)
+* [Initialization](https://github.com/ryan-sandy/mysql-crud#initialization)
 * [Create](https://github.com/ryan-sandy/mysql-crud#create)
 * [Load (Retrieve)](https://github.com/ryan-sandy/mysql-crud#load-retreive)
 * [Update](https://github.com/ryan-sandy/mysql-crud#update)
 * [Destroy](https://github.com/ryan-sandy/mysql-crud#destroy)
 * [Advanced](https://github.com/ryan-sandy/mysql-crud#advanced-usage)
 
-##Usage:
-In-order to create a crud-object you must called the mysql-crud function with two parameters: a mysql connection pool and the table name your object. Remember, mysql-crud only performs work on a single table.
+##Initialization:
+In-order to create a crud-object you must called the mysql-crud function with two parameters: a mysql connection pool and the table name.
 
 ```javascript
 var mysql = require('mysql');                
@@ -29,7 +29,7 @@ var user-crud = CRUD(db, 'users');
 
 `create(attributes, callback)`
 
-This function will perform the INSERT INTO query on the specified table. It will set the values equal to the first parameter and then call the callback. The callback is the standard mysql callback (err, and rows). 
+This function will perform the INSERT INTO query. It will escape the `attributes` object into `SET <key> : <value>`. Once the insert is complete it will call the callback with the node-mysql callback (err, and rows). 
 
 ```javascript
 user-curd.create({'id' : 1, 'username' : 'test', 'password' : '1234'}, function (err, vals) {
@@ -39,14 +39,23 @@ user-curd.create({'id' : 1, 'username' : 'test', 'password' : '1234'}, function 
 
 ##Load (Retreive)
 
-`load(selector, callback)`
+`load(selector, callback, [options])`
 
-This function will SELECT all the rows that match the selector key-value. Multiple keys will be considered AND in the WHERE clause.
+This function will SELECT all the rows that are equal to selector key-value. The keys are the columns and the values are the values to select against. If the selector contains multiple keys-value pairs, these will be escaped into multiple equal statements joined together with `AND`. An empty selector object ({}) will be escaped to `WHERE 1`;
+
+The `options` parameter is an object that may contain two properties, `limit` and `offset`. These will be escaped into their respective MySQL `LIMIT` and `OFFEST` clauses. Note, an offset without a limit will be ignored.
 
 Example:
 ```javascript
 user-crud.load({'first-name' : 'mysql', 'last-name' : 'crud'}, callback);
 //SELECT * FROM 'users' WHERE 'first-name' = "mysql" AND 'last-name' = "CRUD"
+//optionally
+user-crud.load({}, callback, {'limit' : 25, 'offset' : 10});
+//SELECT * FROM `users` WHERE 1 LIMIT 25 OFFSET 10
+
+//offset with out limit is ignored
+user-crud.load({}, callback, {'offset' : 10});
+//SELECT * FROM `users` WHERE 1
 ```
 
 
