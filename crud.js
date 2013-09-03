@@ -1,6 +1,5 @@
-//Copyright 2012 ERAS/Educational Research and Services
-//Reproduction of this material strictly prohibited.
-//Written by Ryan Lee
+//Copyright 2013 Ryan Lee
+//MIT License
 
 'use strict';
 /*jslint node:true, indent:2, nomen:true*/
