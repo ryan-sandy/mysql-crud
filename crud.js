@@ -16,6 +16,7 @@ var andEscape = function (query, values) {
       cnt = 0;
     for (key in values) {
       if (values.hasOwnProperty(key)) {
+        cnt += 1;
         rtn.push(mysql.escapeId(key) + ' = ' + mysql.escape(values[key]));
       }
     }
