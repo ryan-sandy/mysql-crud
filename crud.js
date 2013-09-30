@@ -72,6 +72,7 @@ module.exports = function (db, table) {
           next(err, rows);
         });
       });
-    }
+    },
+    'andEscape' : andEscape
   };
 };
