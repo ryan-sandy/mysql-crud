@@ -92,9 +92,9 @@ exports.update = crud.update;
 exports.destroy = crud.destroy;
 ```
 
-###AndEscape
+##AndEscape
 
-crud.andEscape(queryString, obj)
+`crud.andEscape(queryString, obj)`
 
 Replaces `??` in queryString with `key = values AND key2 = values2` from the `obj` parameter. Escapes obj using node-mysql escape method.
 
