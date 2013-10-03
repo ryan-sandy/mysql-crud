@@ -42,7 +42,12 @@ module.exports = function (db, table) {
     'load' : function (attrs, next, opts) {
       db.getConnection(function (conErr, connection) {
         if (conErr) { return next(conErr); }
-        var query = andEscape("SELECT * FROM " + table + " WHERE ??", attrs);
+        var query;
+        try {
+          query = andEscape("SELECT * FROM " + table + " WHERE ??", attrs);
+        } catch (e) {
+          return next(e);
+        }
         if (opts && opts.limit) {
           query += ' LIMIT ' + mysql.escape(opts.limit);
         }
@@ -58,7 +63,13 @@ module.exports = function (db, table) {
     'update' : function (sel, attrs, next) {
       db.getConnection(function (conErr, connection) {
         if (conErr) { return next(conErr); }
-        connection.query(andEscape('UPDATE ' + table + " SET ? WHERE ??", sel), attrs, function (err, rows) {
+        var query;
+        try {
+          query = andEscape('UPDATE ' + table + " SET ? WHERE ??", sel);
+        } catch (e) {
+          return next(e);
+        }
+        connection.query(query, attrs, function (err, rows) {
           connection.release();
           next(err, rows);
         });
@@ -67,7 +78,13 @@ module.exports = function (db, table) {
     'destroy' : function (attrs, next) {
       db.getConnection(function (conErr, connection) {
         if (conErr) { return next(conErr); }
-        connection.query(andEscape("DELETE FROM " + table + " WHERE ??", attrs), function (err, rows) {
+        var query;
+        try {
+          query = andEscape("DELETE FROM " + table + " WHERE ??", attrs);
+        } catch (e) {
+          return next(e);
+        }
+        connection.query(query, function (err, rows) {
           connection.release();
           next(err, rows);
         });

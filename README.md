@@ -32,7 +32,7 @@ var user-crud = CRUD(db, 'users');
 This function will perform the INSERT INTO query. It will escape the `attributes` object into `SET <key> : <value>`. Once the insert is complete it will call the callback with the node-mysql callback (err, and rows). 
 
 ```javascript
-user-curd.create({'id' : 1, 'username' : 'test', 'password' : '1234'}, function (err, vals) {
+user-crud.create({'id' : 1, 'username' : 'test', 'password' : '1234'}, function (err, vals) {
 	//mysql callback
 });
 ```

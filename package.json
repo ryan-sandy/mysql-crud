@@ -1,9 +1,11 @@
 {
   "name": "mysql-crud",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A mysql CRUD file to use with mysql package",
   "main": "crud.js",
-  "scripts": {},
+  "scripts": {
+    "test" : "./node_modules/.bin/mocha test.js"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/ryan-sandy/mysql-crud.git"
@@ -11,10 +13,14 @@
   "dependencies" : {
     "mysql" : "x"
   },
+  "devDependencies" : {
+    "mocha" : "x"
+  },
   "keywords": [
     "mysql",
     "mysql-crud",
-    "crud"
+    "crud",
+    "mysql crud"
   ],
   "author": {
     "name" : "Ryan Lee",
