@@ -53,17 +53,17 @@ module.exports = function (db, table) {
         } catch (e) {
           return next(e);
         }
+          if (opts && opts.order) {
+              query += ' ORDER BY ' + mysql.escape(opts.order);
+          }
+          if (opts && opts.order && opts.desc) {
+              query += ' DESC ';
+          }
         if (opts && opts.limit) {
           query += ' LIMIT ' + mysql.escape(opts.limit);
         }
         if (opts && opts.limit && opts.offset) {
           query += ' OFFSET ' + mysql.escape(opts.offset);
-        }
-        if (opts && opts.order) {
-          query += ' ORDER BY ' + mysql.escape(opts.order);
-        }
-        if (opts && opts.order && opts.desc) {
-          query += ' DESC ';
         }
         connection.query(query, function (err, rows) {
           connection.release();
