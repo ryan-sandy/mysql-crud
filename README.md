@@ -43,8 +43,16 @@ user-crud.create({'id' : 1, 'username' : 'test', 'password' : '1234'}, function 
 
 This function will SELECT all the rows that are equal to selector key-value. The keys are the columns and the values are the values to select against. If the selector contains multiple keys-value pairs, these will be escaped into multiple equal statements joined together with `AND`. An empty selector object ({}) will be escaped to `WHERE 1`;
 
-The `options` parameter is an object that may contain two properties, `limit` and `offset`. These will be escaped into their respective MySQL `LIMIT` and `OFFEST` clauses. Note, an offset without a limit will be ignored.
+The `options` parameter is an object that may different properties:
+ 
+* `limit` and `offset`. These will be escaped into their respective MySQL `LIMIT` and `OFFEST` clauses. Note, an offset without a limit will be ignored.
 
+* `columns` as array of column name, substitute the `*` from the `SELECT` statement.
+
+* `order` a string with the name of the column to be sorted.
+
+* `desc` true|false if true is sorted in descending order. Note, desc without a order will be ignored.
+ 
 Example:
 ```javascript
 user-crud.load({'first-name' : 'mysql', 'last-name' : 'crud'}, callback);

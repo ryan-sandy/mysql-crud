@@ -39,12 +39,17 @@ module.exports = function (db, table) {
         });
       });
     },
-    'load' : function (attrs, next, opts) {
+    'load': function (attrs, next, opts) {
       db.getConnection(function (conErr, connection) {
-        if (conErr) { return next(conErr); }
-        var query;
+        if (conErr) {
+          return next(conErr);
+        }
+        var query, columns = '*';
+        if (opts && opts.columns) {
+          columns = mysql.escapeId(opts.columns);
+        }
         try {
-          query = andEscape("SELECT * FROM " + table + " WHERE ??", attrs);
+          query = andEscape("SELECT " + columns + " FROM " + table + " WHERE ??", attrs);
         } catch (e) {
           return next(e);
         }
@@ -53,6 +58,12 @@ module.exports = function (db, table) {
         }
         if (opts && opts.limit && opts.offset) {
           query += ' OFFSET ' + mysql.escape(opts.offset);
+        }
+        if (opts && opts.order) {
+          query += ' ORDER BY ' + mysql.escape(opts.order);
+        }
+        if (opts && opts.order && opts.desc) {
+          query += ' DESC ';
         }
         connection.query(query, function (err, rows) {
           connection.release();

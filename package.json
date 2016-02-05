@@ -31,6 +31,10 @@
       "name" : "Stephen Wan",
       "email" : "stephen@stephenwan.net",
       "url" : "http://www.stephenwan.net/"
+    },
+    {
+      "name": "Lorenzo Pizzari",
+      "email": "lorenzo.pizzari@systemdesign.it"
     }
   ],
   "license": "MIT",
