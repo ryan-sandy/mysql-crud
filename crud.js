@@ -54,7 +54,7 @@ module.exports = function (db, table) {
           return next(e);
         }
           if (opts && opts.order) {
-              query += ' ORDER BY ' + mysql.escape(opts.order);
+              query += ' ORDER BY ' + mysql.escapeId(opts.order);
           }
           if (opts && opts.order && opts.desc) {
               query += ' DESC ';
